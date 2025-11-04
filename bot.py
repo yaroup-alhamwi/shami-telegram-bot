@@ -3,15 +3,12 @@ import openai
 from telegram import Update
 from telegram.ext import ApplicationBuilder, ContextTypes, MessageHandler, CommandHandler, filters
 
-# إعداد مفاتيح البيئة
 openai.api_key = os.getenv("OPENAI_API_KEY")
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 
-# دالة الترحيب
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("أهلا وسهلا! 🖐️ احكي معي باللهجة الشامية وأنا بجاوبك بكل ود 😊")
 
-# دالة الرد العامة
 async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_message = update.message.text
     try:
@@ -26,10 +23,7 @@ async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     except Exception as e:
         await update.message.reply_text(f"صار خطأ 😅: {e}")
 
-# بناء التطبيق (ما في Updater هون)
 app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
-
-# ربط الأوامر والرسائل
 app.add_handler(CommandHandler("start", start))
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, reply))
 
