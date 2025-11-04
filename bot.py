@@ -1,14 +1,11 @@
-from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, ContextTypes
-from openai import OpenAI
 import os
-from dotenv import load_dotenv
+from telegram import Update
+from telegram.ext import ApplicationBuilder, MessageHandler, ContextTypes, filters
+from openai import OpenAI
 
-load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 
- 
 client = OpenAI(api_key=OPENAI_API_KEY)
 
 async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -16,7 +13,7 @@ async def reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {"role": "system", "content": "احكي باللهجة الشامية بطريقة لطيفة وطبيعية."},
+            {"role": "system", "content": "احكي باللهجة الشامية بطريقة ودودة وطبيعية."},
             {"role": "user", "content": user_message}
         ]
     )
